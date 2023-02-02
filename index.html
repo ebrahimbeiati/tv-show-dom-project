@@ -10,13 +10,55 @@
 
   <body>
     <div id="root">
+        <section id="header-wrapper">
+      <div id="header">
+        <div id="header-logo">
+          <i class="fas fa-tv fa-5x "></i>
+          <h1>Tv Show </h1>
+        </div>
+        
+        <div id="search-wrapper">
+          <select name="allShows" id="allShows">
+
+          </select>
+          <select name="tvShowList" id="showList">
+
+          </select>
+        <input type="text" id="search" name="search" placeholder="Search" autocomplete="off">
+        <span id="result-count"></span>
+        </div>
+      </div>
+    </section>
+     
+      <div id="source-wrapper">
+        <a  id="source" href="https://www.tvmaze.com/"> Tv Show</a>
+      </div>
     </div>
     
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
-
+    
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+    <script src="shows.js">
+       const APIURL = 'http://api.tvmaze.com/shows?page=1';
+
+        async function getMovies(){
+
+            const resp = await fetch(APIURL);
+            const respData = await resp.json();
+
+            console.log(resp.data);
+            respData.forEach((shows) => {
+                const img = document.createElement("img");
+                //img.src = shows.image.medium; // Choose beetwen medium or original
+                img.src = shows.image.original  // Choose beetwen medium or original
+            })
+            return respData; 
+        }
+        getMovies();
+
+    </script>
   </body>
 </html>
