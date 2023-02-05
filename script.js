@@ -1,84 +1,55 @@
-// You can edit ALL of the code here
-// function setup() {
-//   const allEpisodes = getAllEpisodes();
-//   makePageForEpisodes(allEpisodes);
-// }
-
-// function makePageForEpisodes(episodeList) {
-//   const rootElem = document.getElementById("root");
-//   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-// }
-
-
-
+//You can edit ALL of the code here
 const searchBox = document.getElementById("search");
-const episodesDropdown = document.getElementById("showList");
-const showsDropdown = document.getElementById("allShows");
-let allEpisodes = "null";
-let allShows = "null";
+const episodesDropdown = document.getElementById("episodeList");
+const MoviesDropdown = document.getElementById("allMovies");
+let allEpisodes = null;
+let allMovies = null;
 
-// runs once,only when page loads.
 function setup() {
-  allShows = getAllShows();
-  const sortedAllShows = allShows.sort((a, b) => {
+  allMovies = getAllShows();
+  const sortedAllShows = allMovies.sort((a, b) => {
     return a.name < b.name ? -1 : 1;
   });
   createShowsDropdownOptions(sortedAllShows);
   populateCards(sortedAllShows, "show");
 }
 
-// I need to get my data from API,because promise is an async function
-// so it goes to the next line.
-// but still we does not have any data
-// I decided to connect my website to the main tvmaze.com
-
-
-function getEpisodes(showId) {
-  const endpoint = `https://api.tvmaze.com/shows/${showId}/episodes`;
+function getEpisodes(movieId) {
+  const endpoint = `https://api.tvmaze.com/shows/${movieId}/episodes`;
   return fetch(endpoint).then((response) => response.json());
 }
 
-// for search
-//  first I need to create input search,reference to it
-//  in my html
-// so whenever I type in input box,I need to listen to it
-// then filter the list with the value of the input against name OR summary fields
-// then call populateCards function with filtered array
-// The display should update immediately after each keystroke changes the input.using keyup
-searchBox.addEventListener("input", (e) => {
-  let searchPhrase = e.target.value.toLowerCase();
+searchBox.addEventListener("input", (element) => {
+  let searchPhrase = element.target.value.toLowerCase();
   let searchResult = search(searchPhrase, allEpisodes);
   populateCards(searchResult);
   displayCount(searchResult);
 });
 
-function search(phrase, episodes) {
+function search(letter, episodes) {
   const filteredEpisodes = episodes.filter((episode) => {
     const { name, summary } = episode;
     return (
-      name.toLowerCase().includes(phrase) ||
-      summary.toLowerCase().includes(phrase)
+      name.toLowerCase().includes(letter) ||
+      summary.toLowerCase().includes(letter)
     );
   });
   return filteredEpisodes;
 }
 
-// this function calculate length of both searched and allEpisodes arrays.
-// and display them on the screen.
 function displayCount(searchedEpisodes) {
-  const displayCountEl = document.getElementById("result-count");
+  const displayCountEl = document.getElementById("search-count");
   const totalEpisodesLength = allEpisodes.length;
   const searchedEpisodesLength = searchedEpisodes.length;
   displayCountEl.innerText = `Displaying ${searchedEpisodesLength}/${totalEpisodesLength} episodes`;
 }
 
 function removeDisplayCount() {
-  const displayCountEl = document.getElementById("result-count");
+  const displayCountEl = document.getElementById("search-count");
   displayCountEl.innerText = "";
 }
 
-function concatenateSeasonAndNumber(episode) {
-  //  unpacking, when I want property from an object we can create a variable like this.
+function concatenateSeasonsAndNumbers(episode) {
   const { season, number } = episode;
   let result = "";
   result += season < 10 ? `S0${season}` : `S${season}`;
@@ -86,7 +57,7 @@ function concatenateSeasonAndNumber(episode) {
   return result;
 }
 
-function createOptionForShowList(episode) {
+function createOptionForMovieList(episode) {
   const option = document.createElement("option");
   option.setAttribute("value", episode.id);
   option.innerText = episode.name;
@@ -94,27 +65,27 @@ function createOptionForShowList(episode) {
 }
 
 function createShowsDropdownOptions(allEpisodes) {
-  showsDropdown.appendChild(
-    createOptionForShowList({ name: "allShows", id: "allShows" })
+  MoviesDropdown.appendChild(
+    createOptionForMovieList({ name: "all shows", id: "all" })
   );
   allEpisodes.forEach((episode) => {
-    const option = createOptionForShowList(episode);
-    showsDropdown.appendChild(option);
+    const option = createOptionForMovieList(episode);
+    MoviesDropdown.appendChild(option);
   });
 }
 
-showsDropdown.addEventListener("change", (e) => {
-  let showId = e.target.value;
-  if (showId === "all") {
-    populateCards(allShows, "show");
+MoviesDropdown.addEventListener("change", (element) => {
+  let movieId = element.target.value;
+
+  if (movieId === "all") {
+    populateCards(allMovies, "show");
     removeDisplayCount();
     makeEpisodeList([]);
   } else {
-    getEpisodes(showId).then((data) => {
+    getEpisodes(movieId).then((data) => {
       allEpisodes = data;
       populateCards(allEpisodes);
-      // for first time we haven't searched anything,so it means
-      // we can pass allEpisodes array as a search result.(73/73)
+
       displayCount(allEpisodes);
       makeEpisodeList(allEpisodes);
     });
@@ -124,7 +95,7 @@ showsDropdown.addEventListener("change", (e) => {
 function createOption(episode) {
   const option = document.createElement("option");
   option.setAttribute("value", episode.id);
-  let title = concatenateSeasonAndNumber(episode);
+  let title = concatenateSeasonsAndNumbers(episode);
   option.innerText = title + `-${episode.name}`;
   return option;
 }
@@ -137,16 +108,16 @@ function makeEpisodeList(allEpisodes) {
   });
 }
 
-episodesDropdown.addEventListener("change", (e) => {
-  let value = e.target.value;
+episodesDropdown.addEventListener("change", (element) => {
+  let value = element.target.value;
   console.log(value);
-  // this property will set the href value to point to an anchor
+
   location.href = `#${value}`;
   let selectedCard = document.getElementById(value);
   selectedCard.classList.add("card--active");
   setTimeout(() => {
     selectedCard.classList.remove("card--active");
-  }, 2000);
+  }, 3000);
 });
 
 function createCard(episode, type) {
@@ -162,13 +133,9 @@ function createCard(episode, type) {
 
   episodeTitle.setAttribute("class", "episode-title");
 
-  // adding this variable cause later when user clicks on select options
-  // we expect page scroll down to the correspondent card
-  // so in this case card needs id equal to the value of the option.
-
   li.setAttribute("id", episode.id);
   if (type !== "show") {
-    let title = concatenateSeasonAndNumber(episode);
+    let title = concatenateSeasonsAndNumbers(episode);
     episodeTitle.innerText = episode.name + "-" + title;
   } else {
     episodeTitle.innerText = episode.name;
@@ -182,7 +149,7 @@ function createCard(episode, type) {
 
   link.setAttribute("class", "imageLink");
   link.href = episode.url;
-  link.innerText = "Watch ";
+  link.innerText = "click on me";
 
   cardTitleWrapper.appendChild(episodeTitle);
   li.appendChild(cardTitleWrapper);
@@ -192,8 +159,6 @@ function createCard(episode, type) {
   return li;
 }
 
-// to clear all cards from the DOM. inorder to add new cards.
-// this function need to be called inside  populateCards function
 function clearCards(ul) {
   ul.innerHTML = "";
 }
