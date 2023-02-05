@@ -1,3 +1,126 @@
 #root {
   color: red;
 }
+body {
+  background: url("https://i.pinimg.com/originals/99/19/95/9919952fddcd4c041d0ea15a6955c02f.jpg");
+  margin: 0;
+  background-color: rgb(12, 12, 13);
+  color: rgb(160, 67, 67);
+  font-family: "Open Sans", sans-serif;
+}
+
+#header-wrapper {
+    margin-top: 40px;
+    width: 100%;
+  padding: 20px 10px;
+}
+#header {
+  width: 1200px;
+  margin: 0 auto;
+}
+#header-logo {
+  display: flex;
+  margin-bottom: 20px;
+}
+#header-logo h1 {
+  margin-left: 10px;
+}
+
+#search {
+  font-size: 20px;
+  margin-right: 15px;
+  padding: 3px;
+  width: 120px;
+  border-radius: 15px;
+  transition: all 0.2s ease-in-out;
+    background-color: lightgrey;
+
+}
+
+#search:focus {
+  width: 250px;
+  
+}
+
+#episodeList {
+  margin-right: 10px;
+  padding: 5px;
+  width: 250px;
+  border-radius: 15px;
+  background-color: lightgrey;
+}
+
+#allMovies{
+    margin-right: 10px;
+    padding: 5px;
+    width: 250px;
+    border-radius: 15px;
+      background-color: lightgrey;
+
+}
+
+#episodes {
+  background-color: rgb(202, 83, 182);
+  width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+  box-shadow: 12px 0 15px -3px rgba(142, 146, 150, 0.8),
+    -12px 0 8px -4px rgba(137, 154, 175, 0.8);
+}
+
+#cards {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  position: relative;
+  background-color: #000000;
+  background-color: rgb(0,0,0,0.7);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 340px;
+  border: 1px solid rgb(225, 213, 213);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px 0;
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  border: 2px solid;
+  transform: scale(1.02);
+}
+.card--active {
+  border-color: rgb(37, 36, 37);
+  background-color: rgb(77, 40, 33);
+}
+
+.card-title-wrapper {
+  border: 1px solid rgb(12, 11, 11);
+  border-radius: 25px;
+  margin: 10px 0;
+  text-align: center;
+}
+.card-img {
+  width: 90%;
+  margin: 10px auto;
+  display: block;
+}
+
+.imageLink {
+  color : rgb(243, 237, 237); 
+  text-decoration: none;
+  font-size: 20px;
+  text-align: center;
+}
+.imageLink a:hover{
+  color : rgb(163, 133, 133); 
+  font-size: 15px;
+}
+#source-wrapper {
+  text-align: center;
+  background-color: rgb(12, 11, 11);
+  padding: 40px 0;
+}

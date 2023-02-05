@@ -3,18 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | My Name (My GitHub username)</title>
+    <title>TV Show Project | My Name:Ebrahim Beiati-Asl (My GitHub username:ebrahimbeiati)</title>
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
-    <div id="root">
-    </div>
+ 
 
+  <body>
+    <div id="header-wrapper">
+      <div id="header">
+        <div id="header-logo">
+          <i class="fas fa-tv fa-5x "></i>
+          <h1>Tv Show</h1>
+        </div>
+        
+        <div id="search-wrapper">
+          <select name="allMovies" id="allMovies">
+
+          </select>
+          <select name="episodeList" id="episodeList">
+
+          </select>
+          </select>
+        <input type="text" id="search" name="search" placeholder="Search" autocomplete="off">
+        <span id="search-count"></span>
+        </div>
+      </div>
+    </section>
+      <section id="episodes">
+        <ul id="cards">
+        
+        </ul>
+
+      </section>
+      <div id="source-wrapper">
+        <a  id="source" href="https://www.tvmaze.com/"> Tv Maze</a>
+      </div>
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
-
+      <script src="shows.js"></script>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   </body>
